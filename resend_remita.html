@@ -1,0 +1,178 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otex | Open Link</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #07152f, #123b68);
+            color: #172033;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 440px;
+            padding: 38px 30px;
+            background: #ffffff;
+            border-radius: 22px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            color: #f5b900;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+
+        .logo span {
+            color: #123b68;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 23px;
+            margin-bottom: 10px;
+        }
+
+        .description {
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.6;
+            margin-bottom: 28px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 16px;
+            border: 1px solid #d8dfeb;
+            border-radius: 11px;
+            font-size: 17px;
+            outline: none;
+            transition: 0.2s;
+        }
+
+        input:focus {
+            border-color: #123b68;
+            box-shadow: 0 0 0 3px rgba(18, 59, 104, 0.1);
+        }
+
+        button {
+            width: 100%;
+            margin-top: 18px;
+            padding: 16px;
+            border: none;
+            border-radius: 11px;
+            background: #f5b900;
+            color: #10213c;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        button:hover {
+            background: #e5aa00;
+            transform: translateY(-1px);
+        }
+
+        .message {
+            min-height: 20px;
+            margin-top: 14px;
+            font-size: 13px;
+            text-align: center;
+            color: #dc2626;
+        }
+
+        .footer {
+            margin-top: 22px;
+            text-align: center;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+    </style>
+</head>
+
+<body>
+
+    <main class="container">
+        <div class="logo">Remita<span>.net</span></div>
+
+        <h1>Download Your Receipt</h1>
+
+        <p class="description">
+            Enter the remita number to retrieve your remita receipt.
+        </p>
+
+        <form id="numberForm">
+            <label for="referenceNumber">Enter remita number</label>
+
+            <input
+                type="text"
+                id="referenceNumber"
+                name="referenceNumber"
+                inputmode="numeric"
+                pattern="[0-9]+"
+                placeholder="e.g. 975479479574"
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">Continue →</button>
+
+            <p class="message" id="message" role="alert"></p>
+        </form>
+
+        <div class="footer">
+            Powered by Otex.ng
+        </div>
+    </main>
+
+    <script>
+        const form = document.getElementById("numberForm");
+        const input = document.getElementById("referenceNumber");
+        const message = document.getElementById("message");
+
+        form.addEventListener("submit", function (event) {
+            event.preventDefault();
+
+            const number = input.value.trim();
+
+            if (!/^[0-9]+$/.test(number)) {
+                message.textContent = "Please enter numbers only.";
+                return;
+            }
+
+            const destination = "https://login.remita.net/remita/exapp/api/v1/send/api/print/billsvc/biller/" +
+                encodeURIComponent(number) + "/printrecieptRequest.pdf";
+
+            window.open(destination, "_blank");
+        });
+    </script>
+
+</body>
+</html>
